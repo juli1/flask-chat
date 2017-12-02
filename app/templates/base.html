@@ -2,7 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>
+        {% if title %}
+        {{ title }}
+        {% else %}
+        Online board
+        {% endif %}
+    </title>
+    <link rel="stylesheet" href="/static/main.css">
 </head>
 
 <body>
@@ -17,6 +24,7 @@
 {% endwith %}
 
 {% if g.user and g.user.is_authenticated %}
+<div id="menu">
 <ul>
     <li><a href="/home">home</a></li>
     <li><a href="/profile">profile</a></li>
@@ -26,6 +34,7 @@
     {% endif %}
     <li><a href="/logout">logout</a></li>
 </ul>
+</div>
 {% endif %}
 
 

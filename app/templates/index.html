@@ -1,9 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>Welcome on the board!</h1>
-
-
 {% for msg in messages %}
     <div><p>{{ msg.author.username }} says: <b>{{ msg.content }}</b></p></div>
 {% endfor %}
@@ -11,10 +8,8 @@
   <form action="/post" method="post" name="index">
       {{ form.hidden_tag() }}
       <p>
-          Please enter your message:<br>
-          {{ form.message(size=80) }}<br>
-      </p>
-      <p><input type="submit" value="bla"></p>
+          {{ form.message(size=80) }}
+      <input type="submit" value="bla"></p>
   </form>
 
   <script type="text/javascript">
