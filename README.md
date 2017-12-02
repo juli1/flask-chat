@@ -1,5 +1,6 @@
 # Flask Chat
-A simple chat in flask
+A simple chat in flask. More a message board that looks like
+in the 80s than a full-featured chat with videos and unicorn.
 
 
 ## Why?
@@ -11,6 +12,16 @@ that requires to be logged on a system you do not control.
 This is a simple application written in Python/Flask.
 It handles a single chat window. Users have to authenticate.
 
+## Requirements
+* Single chat window
+* Several users
+* Admin functions to add/change users
+* No plain password stored
+
+### and for later ...
+This could be integrated as well
+* GIFs search
+* Support to check HTML safety
 
 ## How to use it?
 ```bash
