@@ -4,3 +4,4 @@ sqlalchemy-migrate
 coverage
 flask-wtf
 flask-login
+passlib

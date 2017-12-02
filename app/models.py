@@ -1,4 +1,5 @@
 from app import db
+from passlib.hash import pbkdf2_sha256
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -27,6 +28,14 @@ class User(db.Model):
             return unicode(self.id)  # python 2
         except NameError:
             return str(self.id)  # python 3
+
+    def set_password(self, newpassword):
+        h = pbkdf2_sha256.hash(newpassword)
+        self.password = h
+
+    def check_password(self, p):
+        return pbkdf2_sha256.verify(p, self.password)
+
 
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key = True)

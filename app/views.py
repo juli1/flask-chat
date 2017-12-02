@@ -68,6 +68,7 @@ def adduser():
         newuser=User(username=form.username.data,
                      password=form.password.data,
                      is_admin=False)
+        newuser.set_password(form.password.data)
         db.session.add(newuser)
         db.session.commit()
         return redirect('/admin/list-users')
@@ -91,7 +92,7 @@ def change_password():
         flash("message length too small")
         return redirect("/admin/list-users")
     user_to_modify = u.first()
-    user_to_modify.password = form.password.data
+    user_to_modify.set_password(form.password.data)
     db.session.commit()
     return redirect("/admin/list-users")
 
@@ -105,7 +106,6 @@ def login():
     if form.validate_on_submit():
 
         users = User.query.filter(User.username == form.username.data)
-        print ("query count {}".format(users.count()))
         if users.count() != 1:
             flash('User %s does not exist' %
                   (form.username.data))
@@ -113,14 +113,13 @@ def login():
                                    title='Sign In',
                                    form=form)
         user = users.first()
-        if user.password != form.password.data:
+        if not user.check_password(form.password.data):
             flash('Invalid password for user %s' %
                   (form.username.data))
             return render_template('login.html',
                                    title='Sign In',
                                 form=form)
         login_user(user)
-        print("Password {}".format(user.password))
         return redirect('/index')
     return render_template('login.html',
                            title='Sign In',
@@ -149,7 +148,7 @@ def list_users():
 def profile():
     form = PasswordForm()
     if form.validate_on_submit():
-        g.user.password = form.password.data
+        g.user.set_password(form.password.data)
         db.session.commit()
         return redirect('/index')
     return render_template('profile.html',
