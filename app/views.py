@@ -159,3 +159,14 @@ def profile():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+@app.errorhandler(404)
+def not_found_error(error):
+    flash("Page not found")
+    return redirect("/")
+
+
+@app.errorhandler(500)
+def internal_error(error):
+    flash("Internal error")
+    return redirect("/")
