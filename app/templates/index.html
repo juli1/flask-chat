@@ -8,7 +8,7 @@
     <div><p>{{ msg.author.username }} says: <b>{{ msg.content }}</b></p></div>
 {% endfor %}
 
-  <form action="" method="post" name="index">
+  <form action="/post" method="post" name="index">
       {{ form.hidden_tag() }}
       <p>
           Please enter your message:<br>

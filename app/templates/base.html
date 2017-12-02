@@ -17,6 +17,20 @@
     </ul>
   {% endif %}
 {% endwith %}
+
+{% if g.user and g.user.is_authenticated %}
+<ul>
+    <li><a href="/home">home</a></li>
+    <li><a href="/profile">profile</a></li>
+    {% if g.user.is_admin %}
+    <li><a href="/list-users">list users</a></li>
+    <li><a href="/add-user">add user</a></li>
+    {% endif %}
+    <li><a href="/logout">logout</a></li>
+</ul>
+{% endif %}
+
+
 {% block content %}{% endblock %}
 </body>
 </html>
