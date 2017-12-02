@@ -5,7 +5,17 @@
 
 
 {% for u in users %}
-    <div><p>{{ u.username }} </p></div>
+    <div>
+        <p>{{ u.username }}</p>
+        <p>
+            <form action="/admin/change-password" method="post" name="change-password">
+                {{ forms[u.username].hidden_tag() }}
+                {{ forms[u.username].username}}
+                {{ forms[u.username].password(size=80) }}
+                <p><input type="submit" value="change password"></p>
+            </form>
+        </p>
+    </div>
 {% endfor %}
 
 {% endblock %}

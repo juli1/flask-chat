@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    
-    <meta http-equiv="refresh" content="30;url=/">
 </head>
 
 <body>
@@ -23,8 +21,8 @@
     <li><a href="/home">home</a></li>
     <li><a href="/profile">profile</a></li>
     {% if g.user.is_admin %}
-    <li><a href="/list-users">list users</a></li>
-    <li><a href="/add-user">add user</a></li>
+    <li><a href="/admin/list-users">list users</a></li>
+    <li><a href="/admin/add-user">add user</a></li>
     {% endif %}
     <li><a href="/logout">logout</a></li>
 </ul>
