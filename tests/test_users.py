@@ -40,4 +40,4 @@ class TestCase(unittest.TestCase):
         self.assertTrue(User.delete('foobar5'))
 
 if __name__ == '__main__':
-    unnittest.main()
+    unittest.main()

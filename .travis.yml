@@ -5,5 +5,13 @@ language: python
 python:
   - "3.6"
 
+install:
+ - pip install coveralls
+
+
 script:
-  - python -m unittest discover tests
+  - coverage run  --source app  -m unittest discover tests
+#  - python -m unittest discover tests
+
+after_success:
+    coveralls
