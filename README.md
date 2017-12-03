@@ -31,7 +31,7 @@ This could be integrated as well
 git clone https://github.com/juli1/flask-chat.git
 cd flask-chat
 # Replace the following line with virtualenv if necessary
-python3.X -m venv flask # Replace X with your version of python
+python3.X -m venv venv # Replace X with your version of python
 source flask/bin/activate
 pip install -r requirements.txt
 ./run-debug.py
@@ -48,6 +48,25 @@ Start with the user *admin*, password *admin*.
 python -m unittest discover tests
 ```
 
+## Dockerization
+
+Build the docker image
+```bash
+docker build -t flask-chat:latest .
+```
+
+
+Run the docker image
+```bash
+docker run -d -p 10000:5050 flask-chat
+```
+
+
+And then, open your browser to [http://127.0.0.1:10000/](http://127.0.0.1:10000/)
+
+
 ## Resources
 * [The Flask Website](http://flask.pocoo.org/)
+* [Dockerfile reference](https://docs.docker.com/engine/reference/builder/)
+* [Docker container for Flask](http://containertutorials.com/docker-compose/flask-simple-app.html)
 * [The Amazing Flask Tutorial](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world)
