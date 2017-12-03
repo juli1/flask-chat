@@ -8,6 +8,10 @@ class LoginForm(FlaskForm):
     password = StringField('username', validators=[DataRequired()])
 
 
+class DeleteUser(FlaskForm):
+    username = HiddenField('username', validators=[DataRequired()])
+
+
 class PasswordForm(FlaskForm):
     username = HiddenField('username', validators=[DataRequired()])
     password = StringField('password', validators=[DataRequired()])

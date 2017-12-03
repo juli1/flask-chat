@@ -1,7 +1,7 @@
 from app import app, db, lm
 from flask import render_template, flash, redirect, session, url_for, request, g
 from flask_login import login_user, logout_user, current_user, login_required
-from .forms import LoginForm, MessageForm, PasswordForm
+from .forms import LoginForm, MessageForm, PasswordForm, DeleteUser
 from .models import User, Message
 
 
@@ -42,7 +42,26 @@ def before_request():
     g.user = current_user
 
 
-@app.route('/admin/add-user', methods=['GET', 'POST'])
+@app.route('/admin/user/delete', methods=['POST'])
+@login_required
+def delete_user():
+    if not g.user.is_admin:
+        redirect("/")
+    form = DeleteUser()
+    if form.validate_on_submit():
+
+        u = User.find(form.username.data)
+
+        if u.username == g.user.username:
+            flash("You cannot remove yourself")
+            return redirect('/admin/user/list')
+        if u:
+            db.session.delete(u)
+            db.session.commit()
+    return redirect('/admin/user/list')
+
+
+@app.route('/admin/user/add', methods=['GET', 'POST'])
 @login_required
 def adduser():
     if not g.user.is_admin:
@@ -58,14 +77,14 @@ def adduser():
                                    form=form)
         # Let's create the user
         if User.create(form.username.data, form.password.data):
-            return redirect('/admin/list-users')
+            return redirect('/admin/user/list')
 
     return render_template('adduser.html',
                            title='Add User',
                            form=form)
 
 
-@app.route('/admin/change-password', methods=['POST'])
+@app.route('/admin/user/change-password', methods=['POST'])
 @login_required
 def change_password():
     if not g.user.is_admin:
@@ -74,14 +93,15 @@ def change_password():
     u = User.query.filter(User.username == form.username.data)
     if u.count() != 1:
         flash("did not found user {}".format(form.username.data))
-        return redirect("/admin/list-users")
+        return redirect("/admin/user/list")
     if len(form.password.data) < 5:
         flash("message length too small")
-        return redirect("/admin/list-users")
+        return redirect("/admin/user/list")
     user_to_modify = u.first()
     user_to_modify.set_password(form.password.data)
     db.session.commit()
-    return redirect("/admin/list-users")
+    return redirect("/admin/user/list")
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -113,7 +133,7 @@ def login():
                            form=form)
 
 
-@app.route('/admin/list-users', methods=['GET'])
+@app.route('/admin/user/list', methods=['GET'])
 @login_required
 def list_users():
     # If the user is not admin, he comes
@@ -122,18 +142,21 @@ def list_users():
         redirect('/')
     allusers=User.query.all()
     forms={}
+    forms_delete={}
     for u in allusers:
         forms[u.username] = PasswordForm(username=u.username)
+        forms_delete[u.username] = DeleteUser(username=u.username)
     return render_template('listusers.html',
                            title='List Users',
                            users=allusers,
-                           forms=forms)
+                           forms=forms,
+                           forms_delete=forms_delete)
 
 
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
-    form = PasswordForm()
+    form = PasswordForm(username=g.user.username)
     if form.validate_on_submit():
         g.user.set_password(form.password.data)
         db.session.commit()
@@ -142,10 +165,12 @@ def profile():
                            title='Profile',
                            form=form)
 
+
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
 
 @app.errorhandler(404)
 def not_found_error(error):

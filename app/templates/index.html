@@ -2,7 +2,12 @@
 {% block content %}
 
 {% for msg in messages %}
-    <div><p>{{ msg.author.username }} says: <b>{{ msg.content }}</b></p></div>
+    <div><p>{% if msg.author %}
+                {{ msg.author.username }}
+            {% else %}
+                unknown player
+            {% endif %}
+        says: <b>{{ msg.content }}</b></p></div>
 {% endfor %}
 
   <form action="/post" method="post" name="index">
