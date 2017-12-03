@@ -1,3 +1,5 @@
+[![Build status](https://travis-ci.org/juli1/flask-chat.svg?master)](https://travis-ci.org/juli1)
+
 # Flask Chat
 A simple chat in flask. More a message board that looks like
 in the 80s than a full-featured chat with videos and unicorn.
