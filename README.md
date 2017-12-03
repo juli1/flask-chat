@@ -1,4 +1,5 @@
 [![Build status](https://travis-ci.org/juli1/flask-chat.svg?master)](https://travis-ci.org/juli1)
+[![Coverage Status](https://coveralls.io/repos/github/juli1/flask-chat/badge.svg?branch=master)](https://coveralls.io/github/juli1/flask-chat?branch=master)
 
 # Flask Chat
 A simple chat in flask. More a message board that looks like
