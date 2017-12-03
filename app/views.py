@@ -14,9 +14,7 @@ def post():
     if form.validate_on_submit():
         flash("Posting message")
         # Adding the message to the database
-        m = Message(content=form.message.data, author=g.user)
-        db.session.add(m)
-        db.session.commit()
+        Message.create(g.user, form.message.data)
         # We redirect, we do not render the template. Otherwise
         # the form will be filled again.
 
@@ -53,25 +51,14 @@ def adduser():
     form = LoginForm()
     if form.validate_on_submit():
         # Check if users with this name exists
-        existing = User.query.filter(User.username == form.username.data)
-
-        if existing.count() != 0:
-            flash("User with that name already exist")
-            return render_template('adduser.html',
-                                   title='Add User',
-                                   form=form)
         if len(form.password.data) < 5:
             flash("Password should be at least 5 chars")
             return render_template('adduser.html',
                                    title='Add User',
                                    form=form)
-        newuser=User(username=form.username.data,
-                     password=form.password.data,
-                     is_admin=False)
-        newuser.set_password(form.password.data)
-        db.session.add(newuser)
-        db.session.commit()
-        return redirect('/admin/list-users')
+        # Let's create the user
+        if User.create(form.username.data, form.password.data):
+            return redirect('/admin/list-users')
 
     return render_template('adduser.html',
                            title='Add User',

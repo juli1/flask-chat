@@ -23,6 +23,35 @@ class User(db.Model):
     def is_anonymous(self):
         return False
 
+    @staticmethod
+    def create(username, password):
+        existing = User.query.filter(User.username == username)
+
+        if existing.count() != 0:
+            return False
+        newuser = User(username=username,
+                       password=password,
+                       is_admin=False)
+        newuser.set_password(password)
+        db.session.add(newuser)
+        db.session.commit()
+        return True
+
+    @staticmethod
+    def find(username):
+        found = User.query.filter(User.username == username)
+        if found.count() == 1:
+            return found.first()
+
+    @staticmethod
+    def delete(username):
+        u = User.find(username)
+        if u:
+            db.session.delete(u)
+            db.session.commit()
+            return True
+        return False
+
     def get_id(self):
         try:
             return unicode(self.id)  # python 2
@@ -42,6 +71,16 @@ class Message(db.Model):
     content = db.Column(db.String(500))
     timestamp = db.Column(db.DateTime)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    @staticmethod
+    def create(user, content):
+        if not user:
+            return False
+
+        m = Message(content=content, author=user)
+        db.session.add(m)
+        db.session.commit()
+        return True
 
     def __repr__(self):
         return '<Message %r>' % (self.content)

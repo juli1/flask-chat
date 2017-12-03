@@ -31,12 +31,19 @@ cd flask-chat
 python3.X -m venv flask # Replace X with your version of python
 source flask/bin/activate
 pip install -r requirements.txt
-./run.py
+./run-debug.py
 ```
 
 And then, open your browser to [http://127.0.0.1:5000/](http://127.0.0.1:5000/)
 
 Start with the user *admin*, password *admin*.
+
+
+## How to run tests?
+
+```bash
+python -m unittest discover tests
+```
 
 ## Resources
 * [The Flask Website](http://flask.pocoo.org/)

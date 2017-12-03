@@ -4,7 +4,7 @@ import unittest
 
 from config import basedir
 from app import app, db
-from app.models import User
+from app.models import User, Message
 
 
 class TestCase(unittest.TestCase):
@@ -19,11 +19,16 @@ class TestCase(unittest.TestCase):
         db.session.remove()
         db.drop_all()
 
-    def test_changePassword(self):
-        u = User(username='toto')
-        u.set_password('bla')
-        self.assertFalse(u.check_password('bli'))
-        self.assertTrue(u.check_password('bla'))
+    def test_post_existing_user(self):
+        self.assertTrue(User.create('foobar5', 'foobar5'))
+        self.assertTrue(Message.create(User.find('foobar5'),'hello'))
+        self.assertTrue(User.delete('foobar5'))
+
+    def test_post_non_existing_user(self):
+        self.assertTrue(User.create('foobar5', 'foobar5'))
+        self.assertFalse(Message.create(User.find('foobar6'),'hello'))
+        self.assertTrue(User.delete('foobar5'))
+
 
 if __name__ == '__main__':
-    unittest.main()
+    unnittest.main()
