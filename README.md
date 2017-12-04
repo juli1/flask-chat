@@ -50,6 +50,8 @@ python -m unittest discover tests
 
 ## Dockerization
 
+The docker image is available on Docker Hub: [https://hub.docker.com/r/juli1/flask-chat/](https://hub.docker.com/r/juli1/flask-chat/)
+
 Build the docker image
 ```bash
 docker build -t flask-chat:latest .
