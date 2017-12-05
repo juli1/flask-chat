@@ -32,8 +32,8 @@ git clone https://github.com/juli1/flask-chat.git
 cd flask-chat
 # Replace the following line with virtualenv if necessary
 python3.X -m venv venv # Replace X with your version of python
-source flask/bin/activate
-pip install -r requirements.txt
+source venv/bin/activate
+pip3 install -r requirements.txt
 ./run-debug.py
 ```
 
