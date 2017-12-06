@@ -28,7 +28,7 @@ def post():
 def index():
     form = MessageForm()
     # Take only the last 20 messages
-    msgs = Message.query.limit(20)
+    msgs = Message.query.order_by(Message.id.desc()).limit(20).all()[::-1]
     return render_template("index.html", messages=msgs,form=form)
 
 
