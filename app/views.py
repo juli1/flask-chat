@@ -12,7 +12,6 @@ def post():
 
     # Handle the case when we send a message
     if form.validate_on_submit():
-        flash("Posting message")
         # Adding the message to the database
         Message.create(g.user, form.message.data)
         # We redirect, we do not render the template. Otherwise

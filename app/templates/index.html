@@ -13,7 +13,7 @@
   <form action="/post" method="post" name="index">
       {{ form.hidden_tag() }}
       <p>
-          {{ form.message(size=80) }}
+          {{ form.message(size=80, id="messagebox") }}
       <input type="submit" value="bla"></p>
   </form>
 
@@ -22,6 +22,9 @@
 
     function setupRefresh() {
       setTimeout("refreshPage();", 20000); // milliseconds
+
+      document.getElementById("messagebox").focus();
+
     }
     function refreshPage() {
        window.location = location.href;
