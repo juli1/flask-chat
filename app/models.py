@@ -1,4 +1,5 @@
 from app import db
+from sqlalchemy.sql import func
 from passlib.hash import pbkdf2_sha256
 
 class User(db.Model):
@@ -77,7 +78,7 @@ class Message(db.Model):
         if not user:
             return False
 
-        m = Message(content=content, author=user)
+        m = Message(content=content, author=user, timestamp=func.now())
         db.session.add(m)
         db.session.commit()
         return True

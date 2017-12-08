@@ -24,3 +24,13 @@ body {
 #menu ul li {
     display: inline;
 }
+
+.msg-date {
+    float:right;
+    text-align: right;
+    font-size: 0.8em;
+}
+
+input {
+width: 100%;
+}

@@ -26,9 +26,14 @@ def post():
 @login_required
 def index():
     form = MessageForm()
-    # Take only the last 20 messages
+    return render_template("index.html", title="Message Board", form=form)
+
+
+@login_required
+@app.route('/messages')
+def get_messages():
     msgs = Message.query.order_by(Message.id.desc()).limit(20).all()[::-1]
-    return render_template("index.html", title="Message Board", messages=msgs,form=form)
+    return render_template("messages.html", messages=msgs)
 
 
 @lm.user_loader
