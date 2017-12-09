@@ -5,6 +5,9 @@
 A simple chat in flask. More a message board that looks like
 in the 80s than a full-featured chat with videos and unicorn.
 
+Information about how to deploy using Docker on a raspberry pi on this 
+[blog post](http://julien.gunnm.org/flask/python/docker/raspberry-pi/2017/12/03/developing-deploying-with-docker-on-raspberry-pi/).
+
 
 ## Why?
 I wanted to have a simple chat with my friends and 
