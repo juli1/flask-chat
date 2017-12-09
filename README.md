@@ -37,6 +37,7 @@ cd flask-chat
 python3.X -m venv venv # Replace X with your version of python
 source venv/bin/activate
 pip3 install -r requirements.txt
+./db_create.py
 ./run-debug.py
 ```
 
